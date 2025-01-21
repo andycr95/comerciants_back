@@ -25,7 +25,7 @@ public class EstablishmentService {
             .name(establishmentDTO.getName())
             .revenue(establishmentDTO.getRevenue())
             .employee_count(establishmentDTO.getEmployee_count())
-            .createdBy(userId)
+            .createdBy(userId.toString())
             .build();
             return establishmentRepository.save(establishment);
         } catch (Exception e) {

@@ -37,6 +37,7 @@ public class WebSecurityConfig {
             .authorizeHttpRequests(authRequest ->
               authRequest
                 .requestMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
+                .requestMatchers(HttpMethod.GET, "/docs").permitAll()
                 .anyRequest().authenticated()
                 )
             .sessionManagement(sessionManager->

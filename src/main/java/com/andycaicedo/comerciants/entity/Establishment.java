@@ -33,8 +33,8 @@ public class Establishment {
     @Column(name = "CREATION_DATE", nullable = true)
     private Date creationDate;
 
-    @Column(name = "CREATED_BY", nullable = false)
-    private Long createdBy;
+    @Column(name = "CREATED_BY", nullable = true)
+    private String createdBy;
 
     @Column(name = "UPDATE_DATE", nullable = true)
     private Date updateDate;

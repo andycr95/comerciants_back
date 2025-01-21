@@ -103,7 +103,9 @@ public class ComerciantService {
     
     public Comerciant getComerciantById(Long id) {
         try {
-            return comerciantRepository.findById(id).orElseThrow();
+            Comerciant comerciant = comerciantRepository.findById(id).orElseThrow();
+            System.out.println(comerciant);
+            return comerciant;
         } catch (Exception e) {
             throw new RuntimeException("Error consulting comerciant", e);
         }
