@@ -2,7 +2,6 @@ package com.andycaicedo.comerciants.service;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.andycaicedo.comerciants.dto.auth.AuthResponse;
@@ -22,7 +21,7 @@ public class AuthService {
 
     public AuthResponse login(LoginDTO loginDTO) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
-        UserDetails user = userRepository.findByEmail(loginDTO.getEmail())
+        User user = userRepository.findByEmail(loginDTO.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found with email: " + loginDTO.getEmail()));        
         String token = jwtService.getToken(user);
         return AuthResponse.builder()

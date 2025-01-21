@@ -9,6 +9,8 @@ import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.andycaicedo.comerciants.entity.User;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -18,12 +20,14 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtService {
     
-    public String getToken(UserDetails user) {
+    public String getToken(User user) {
         return getToken(new HashMap<>(), user);
     }
 
-
-    private String getToken(Map<String, Object> extraClaims, UserDetails user) {
+    private String getToken(Map<String, Object> extraClaims, User user) {
+        extraClaims.put("user_id", user.getId());
+        extraClaims.put("name", user.getName());
+        extraClaims.put("role", user.getRole().getName());
         String token = Jwts
                 .builder()
                 .setClaims(extraClaims)
@@ -36,15 +40,17 @@ public class JwtService {
         return "Bearer " + token;
     }
     
-
     private Key getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SUPER_SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
     
-
     public String getEmailFromToken(String token) {
         return getClaim(token, Claims::getSubject);
+    }
+
+    public Long getUserIdFromToken(String token) {
+        return getClaim(token, claims -> (Long) claims.get("user_id"));
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {

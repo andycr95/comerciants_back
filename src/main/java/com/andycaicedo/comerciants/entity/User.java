@@ -36,7 +36,7 @@ public class User implements UserDetails {
     private String password;
 
 
-    @Column(name = "STATUS", nullable = false)
+    @Column(name = "STATUS", nullable = true)
     private String status;
 
     @ManyToOne
@@ -46,6 +46,9 @@ public class User implements UserDetails {
     @Column(name = "ROLE_ID", nullable = false)
     private Long role_id;
 
+    @Column(name = "CREATED_BY", nullable = true)
+    private String createdBy;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority((role.getName())));
@@ -54,5 +57,17 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return email;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", status='" + status + '\'' +
+                ", role_id=" + role_id +
+                '}';
     }
 }

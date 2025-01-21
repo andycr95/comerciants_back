@@ -1,13 +1,19 @@
 package com.andycaicedo.comerciants.service;
 
+import java.util.Map;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.andycaicedo.comerciants.dto.auth.AuthResponse;
-import com.andycaicedo.comerciants.dto.auth.LoginDTO;
 import com.andycaicedo.comerciants.dto.user.CreateDTO;
 import com.andycaicedo.comerciants.entity.User;
-import com.andycaicedo.comerciants.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,29 +21,32 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JdbcTemplate jdbcTemplate;
 
-    public AuthResponse save(CreateDTO createDTO) {
-        System.out.println("email " + createDTO.getEmail());
-        System.out.println("pass " + createDTO.getPassword());
-        System.out.println("rol " + createDTO.getRoleId());
-        System.out.println("name " + createDTO.getName());
-        String pass = passwordEncoder.encode(createDTO.getPassword());
-        System.out.println(pass);
+    @Transactional
+    public Map<String, Object> save(CreateDTO createDTO) {
+        try {
+            // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            // User user = (User) auth.getPrincipal();
 
-        User user = User.builder()
-            .name(createDTO.getName())
-            .email(createDTO.getEmail())
-            .password(pass)
-            .role_id(createDTO.getRoleId())
-            .build();
+            SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                    .withCatalogName("pkg_users")
+                    .withProcedureName("create_user");
 
-        // userRepository.save(user);
-
-        return AuthResponse.builder()
-            .token("jwtService.getToken(user)")
-            .build();
+            SqlParameterSource in = new MapSqlParameterSource()
+                    .addValue("p_name", createDTO.getName())
+                    .addValue("p_password", passwordEncoder.encode(createDTO.getPassword()))
+                    .addValue("p_email", createDTO.getEmail())
+                    .addValue("p_role_id", createDTO.getRoleId())
+                    .addValue("p_created_by", 1)
+                    .addValue("p_error_code", 0)
+                    .addValue("p_error_message", "");
+                    System.out.println(in);
+            return simpleJdbcCall.execute(in);
+        } catch (Exception e) {
+            throw new RuntimeException("Error creating user", e);
+        }
     }
     
 }

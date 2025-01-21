@@ -9,10 +9,12 @@ import com.andycaicedo.comerciants.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
+@CrossOrigin("*")
 @RequiredArgsConstructor
 public class LoginController {
 
