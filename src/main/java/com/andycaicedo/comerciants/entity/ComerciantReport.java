@@ -8,9 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Data
-public class ComerciantRecord {
+public class ComerciantReport {
     
-    private Long id;
     private String name;
     private String department;
     private String city;

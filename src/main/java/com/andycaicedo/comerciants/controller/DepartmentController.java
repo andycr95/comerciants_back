@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.andycaicedo.comerciants.dto.comerciants.ComerciantDTO;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequiredArgsConstructor
+@Validated
 @CrossOrigin("*")
 @RequestMapping("departments")
 public class DepartmentController {

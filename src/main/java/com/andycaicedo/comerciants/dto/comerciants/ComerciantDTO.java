@@ -1,5 +1,10 @@
 package com.andycaicedo.comerciants.dto.comerciants;
 
+import java.util.List;
+import java.util.Map;
+
+import com.andycaicedo.comerciants.dto.establishment.EstablishmentDTO;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 
@@ -32,8 +37,10 @@ public class ComerciantDTO {
     @NotBlank(message = "registration_date is required")
     private final String status;
 
+    private final List<EstablishmentDTO> establishments;
+
     // Constructor
-    public ComerciantDTO(Long id, String name, Long departmentId, Long cityId, String phone, String email, String registration_date, String status) {
+    public ComerciantDTO(Long id, String name, Long departmentId, Long cityId, String phone, String email, String registration_date, String status, List<EstablishmentDTO> establishments) {
         this.name = name;
         this.departmentId = departmentId;
         this.cityId = cityId;
@@ -42,5 +49,6 @@ public class ComerciantDTO {
         this.id = id;
         this.registration_date = registration_date;
         this.status = status;
+        this.establishments = establishments;
     }
 }

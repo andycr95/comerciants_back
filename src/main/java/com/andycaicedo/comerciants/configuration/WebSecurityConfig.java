@@ -36,8 +36,7 @@ public class WebSecurityConfig {
                 .disable())
             .authorizeHttpRequests(authRequest ->
               authRequest
-                        .requestMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
-                .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                .requestMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
                 .anyRequest().authenticated()
                 )
             .sessionManagement(sessionManager->

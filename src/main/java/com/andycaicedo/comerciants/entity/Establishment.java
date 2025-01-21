@@ -30,15 +30,15 @@ public class Establishment {
     @Column(name = "EMPLOYEE_COUNT")
     private Integer employee_count;
 
-    @Column(name = "CREATION_DATE", nullable = false)
+    @Column(name = "CREATION_DATE", nullable = true)
     private Date creationDate;
 
     @Column(name = "CREATED_BY", nullable = false)
-    private String createdBy;
+    private Long createdBy;
 
-    @Column(name = "UPDATE_DATE", nullable = false)
+    @Column(name = "UPDATE_DATE", nullable = true)
     private Date updateDate;
 
-    @Column(name = "UPDATED_BY", nullable = false)
+    @Column(name = "UPDATED_BY", nullable = true)
     private String updatedBy;
 }

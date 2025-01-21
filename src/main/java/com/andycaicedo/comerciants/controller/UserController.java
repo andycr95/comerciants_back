@@ -3,6 +3,7 @@ package com.andycaicedo.comerciants.controller;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("users")
 @CrossOrigin("*")
+@Validated
 @RequiredArgsConstructor
 public class UserController {
 

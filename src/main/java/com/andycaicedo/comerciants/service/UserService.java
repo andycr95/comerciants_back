@@ -27,8 +27,8 @@ public class UserService {
     @Transactional
     public Map<String, Object> save(CreateDTO createDTO) {
         try {
-            // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            // User user = (User) auth.getPrincipal();
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            User user = (User) auth.getPrincipal();
 
             SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                     .withCatalogName("pkg_users")
@@ -39,7 +39,7 @@ public class UserService {
                     .addValue("p_password", passwordEncoder.encode(createDTO.getPassword()))
                     .addValue("p_email", createDTO.getEmail())
                     .addValue("p_role_id", createDTO.getRoleId())
-                    .addValue("p_created_by", 1)
+                    .addValue("p_created_by", user.getId())
                     .addValue("p_error_code", 0)
                     .addValue("p_error_message", "");
                     System.out.println(in);
